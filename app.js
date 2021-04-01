@@ -1,6 +1,6 @@
 const express = require("express")
-require("/db/mongoose") // connect to database
-const User = require("/models/user")
+require("../first/db/mongoose") // connect to database
+const User = require("../first/db/mongoose")
 
 const app = express()
 
