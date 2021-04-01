@@ -4,14 +4,13 @@ const User = require("./models/user")
 const userRouter = require("./router/user")
 
 const app = express()
-app.use(userRouter)
+
 
 
 const port = 8080
 
-
 app.use(express.json())
-
+app.use(userRouter)
 
 
 
