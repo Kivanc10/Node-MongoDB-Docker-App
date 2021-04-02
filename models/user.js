@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
 
 
 const userSchema = new mongoose.Schema({
@@ -18,7 +19,8 @@ const userSchema = new mongoose.Schema({
             if (!validator.isEmail(value)) {
                 throw new Error('Email is invalid')
             }
-        }
+        },
+        unique: true
     },
     password: {
         type: String,
@@ -30,35 +32,60 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Password cannot contain "password"')
             }
         }
-    }
+    },
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
 })
 
-userSchema.statics.userQuery = async (email,password) => {
-    const user = await User.findOne({email})
 
-    if(!user) {
-        throw new Error("Unable to login")
+userSchema.methods.generateAuthToken = async function () {
+    /*
+    in this function , I'm gonna try to generate auth token for user
+    so I will ensure tokens user to make rest-api secure.
+    tokens represent the number of logins belong to user 
+    */
+
+    const user = this;
+    const token = jwt.sign({ _id: user._id.toString() }, "myAuthToken10")
+    user.tokens = user.tokens.concat({ token }) // add new session to user tokens
+
+    await user.save()
+
+    return token
+
+
+}
+
+userSchema.statics.userQuery = async function (email, password) {
+    const user = await User.findOne({ email })
+
+    if (!user) {
+        throw new Error()
     }
 
-    const isMatch = await bcrypt.compare(password,user.password)
+    const isMatch = await bcrypt.compare(password, user.password)
 
-    if(!isMatch){
-        throw new Error("Unable to login")
+    if (!isMatch) {
+        throw new Error()
     }
 
     return user
 
 }
 
-userSchema.pre("save",async function (next) { // it runs when you invoke user.save()
+userSchema.pre("save", async function (next) { // it runs when you invoke user.save()
     console.log("save func____")
     /*
     in this func I'm gonna try to hash passwords belong to users
     I will apply to help of "isModified" func
     */
     const user = this;
-    if(user.isModified("password")){ // if it is true, it has not hashed
-        user.password = await bcrypt.hash(user.password,8)
+    if (user.isModified("password")) { // if it is true, it has not hashed
+        user.password = await bcrypt.hash(user.password, 8)
     }
 
     next()

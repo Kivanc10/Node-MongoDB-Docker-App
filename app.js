@@ -5,10 +5,25 @@ require("./db/mongoose") // connect to database
 const User = require("./models/user")
 const userRouter = require("./router/user")
 
+
 const app = express()
 
 
 const port = 8080
+
+// app.use((req,res,next) => {
+//     if(req.method == "GET"){
+//         res.send("Get method are disabled")
+//     }
+//     else {
+//         next()
+//     }
+// })
+
+// app.use((req,res,next) => {
+//     res.status(503).send({error : "we are maintenance"})
+//     next()
+// })
 
 app.use(express.json())
 app.use(userRouter)
