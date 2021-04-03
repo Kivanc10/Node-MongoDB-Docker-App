@@ -11,7 +11,7 @@ router.post("/users",async (req,res) => { // sign up
         await user.save() // first save
         const token = await user.generateAuthToken() // add user's token to new session and save them
 
-        res.status(201).send({user,token})
+        res.send({user,token})
     } catch (error) {
         res.status(400).send(error)
     }

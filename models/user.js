@@ -11,16 +11,16 @@ const userSchema = new mongoose.Schema({
         trim: true
     },
     email: {
-        type: String,
+        type:String,
         required: true,
+        unique: true,
         trim: true,
         lowercase: true,
         validate(value) {
             if (!validator.isEmail(value)) {
                 throw new Error('Email is invalid')
             }
-        },
-        unique: true
+        }
     },
     password: {
         type: String,
