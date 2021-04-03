@@ -5,17 +5,31 @@ const auth = require("../middleware/auth")
 
 
 
+// router.post("/users",async (req,res) => { // sign up
+//     const user = new User(req.body)
+//     try {
+        
+//         await user.save() // first save
+//         const token = await user.generateAuthToken() // add user's token to new session and save them
+
+//         res.status(201).send({user,token})
+//     } catch (error) {
+//         res.status(400).send(error)
+//     }
+// })
+
 router.post("/users",async (req,res) => { // sign up
-    const user = new User(req.body)
+   
     try {
-        await user.save() // first save
+        const user = await User.preventDublicate(req.body)
         const token = await user.generateAuthToken() // add user's token to new session and save them
 
         res.status(201).send({user,token})
     } catch (error) {
-        res.status(400).send(error)
+        res.status(400).send("This email has been used already")
     }
 })
+
 
 
 router.post("/users/login",async (req,res) => { // logIn
@@ -64,7 +78,7 @@ router.post("/users/logoutAll",auth,async (req,res) => { // logout from all sess
 
 
 
-router.patch("/users/:id",async (req,res) => {
+router.patch("/users/me",auth,async (req,res) => {
     const updates = Object.keys(req.body) // it retrieves just keys
     const currentMetrics = ['name', 'email', 'password']
 
@@ -76,17 +90,12 @@ router.patch("/users/:id",async (req,res) => {
 
 
     try {
-        const user = await User.findById(req.params.id)
+        
         updates.forEach((update) => {
-            user[update] = req.body[update]
+            req.user[update] = req.body[update]
         })
-        await user.save()
-
-        if(!user){
-            return res.status(404).send()
-        }
-
-        res.send(user)
+        await req.user.save()
+        res.send(req.user)
 
     } catch (error) {
         res.status(400).send(error)

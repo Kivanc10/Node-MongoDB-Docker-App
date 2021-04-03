@@ -12,7 +12,7 @@ const auth = async (req, res, next) => {
         }
 
         req.user = user
-        req.token = token
+        req.token = token // I taken to use for delete process
         next()
 
     } catch (error) {

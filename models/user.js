@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
 
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -76,6 +77,32 @@ userSchema.statics.userQuery = async function (email, password) {
     return user
 
 }
+
+userSchema.methods.toJSON = function () { // hiding private data
+    const user = this
+    const userObj = user.toObject()
+    delete userObj.password
+    delete userObj.tokens
+    return userObj
+}
+
+
+// this function was implemented to prevent duplicate email in db
+
+userSchema.statics.preventDublicate = async function (obj) {
+    const query = await User.findOne({email : obj.email})
+    if(!query){
+        const user = new User(obj)
+        await user.save()
+        return user
+    }
+    else {
+        throw new Error()
+    }
+    
+} 
+
+
 
 userSchema.pre("save", async function (next) { // it runs when you invoke user.save()
     console.log("save func____")
