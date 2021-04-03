@@ -78,6 +78,15 @@ userSchema.statics.userQuery = async function (email, password) {
 
 }
 
+
+userSchema.virtual("tasks",{
+    ref : "Task",
+    localField : "_id",
+    foreignField : "owner"
+})
+
+
+
 userSchema.methods.toJSON = function () { // hiding private data
     const user = this
     const userObj = user.toObject()
