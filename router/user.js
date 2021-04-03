@@ -11,7 +11,7 @@ router.post("/users",async (req,res) => { // sign up
         await user.save() // first save
         const token = await user.generateAuthToken() // add user's token to new session and save them
 
-        res.send({user,token})
+        res.status(201).send({user,token})
     } catch (error) {
         res.status(400).send(error)
     }
@@ -23,7 +23,7 @@ router.post("/users/login",async (req,res) => { // logIn
         // make control that whether user have logged in before or not
         const user = await User.userQuery(req.body.email,req.body.password)
         const token = await user.generateAuthToken()
-        res.status(201).send({user,token})
+        res.send({user,token})
 
     } catch (error) {
         res.status(400).send("Unable to login")
