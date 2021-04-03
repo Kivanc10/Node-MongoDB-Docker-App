@@ -11,19 +11,6 @@ const app = express()
 
 const port = 8080
 
-// app.use((req,res,next) => {
-//     if(req.method == "GET"){
-//         res.send("Get method are disabled")
-//     }
-//     else {
-//         next()
-//     }
-// })
-
-// app.use((req,res,next) => {
-//     res.status(503).send({error : "we are maintenance"})
-//     next()
-// })
 
 app.use(express.json())
 app.use(userRouter)
@@ -41,31 +28,6 @@ app.get("/",(req,res) => {
 })
 
 
-// const bcrypt = require("bcryptjs")
-// const fun = async () => {
-//     const pswrd = "red_fucker___1"
-//     const hashd_pswrd = await bcrypt.hash(pswrd,8)
-//     console.log("original pswrd -> ",pswrd)
-//     console.log("hashed_pswrd -> ",hashd_pswrd)
-
-//     const isMatch = await bcrypt.compare("red_fucker___1",hashd_pswrd)
-//     console.log("ismatched ? ",isMatch)
-// }
-
-// fun()
-
-const jwt = require("jsonwebtoken")
-
-const myFunc = async () => {
-    const token = jwt.sign({_id:"ab1234"},"thisisnewjwt",{expiresIn : "7 days"})
-    console.log("Token -> " + token)
-    const data = jwt.verify(token,"thisisnewjwt")
-    console.log("data -> " + data._id)
-}
-
-
-
-myFunc()
 
 app.listen(port,() => {
     console.log("server is available on port "+port)
