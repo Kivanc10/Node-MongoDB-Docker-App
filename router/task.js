@@ -41,7 +41,7 @@ router.get("/tasks",auth,async (req,res) => {
 
     try {
         await req.user.populate({
-            path : "tasks",
+            path : "tasks", 
             match,
             options : {
                 limit : parseInt(req.query.limit),
