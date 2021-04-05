@@ -1,6 +1,7 @@
 const express = require("express")
 const Task = require("../models/task")
 const auth = require("../middleware/auth")
+const { parse } = require("path")
 const router = express.Router()
 
 
@@ -19,11 +20,35 @@ router.post("/tasks",auth,async (req,res) => { // auth allows us to make operati
     }
 })
 
+// GET /tasks/?completed=true
 
+// GET /tasks/sortBy=createdAt:desc
 
 router.get("/tasks",auth,async (req,res) => {
+    const match = {}
+
+    const sort = {}
+
+    if(req.query.sortBy){
+        const parts = req.query.sortBy.split(":") // createdAt,desc(asc)
+        sort[parts[0]] = parts[1] === "desc" ? -1 : 1
+    }
+
+
+    if (req.query.completed){ // if completed is true
+        match.completed = req.query.completed === "true"
+    }
+
     try {
-        await req.user.populate("tasks").execPopulate()
+        await req.user.populate({
+            path : "tasks",
+            match,
+            options : {
+                limit : parseInt(req.query.limit),
+                skip : parseInt(req.query.skip),
+                sort
+            }
+        }).execPopulate()
         res.send(req.user.tasks)
     } catch (error) {
         res.status(500).send()
