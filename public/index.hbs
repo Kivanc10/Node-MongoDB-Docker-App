@@ -1,17 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <h1>{{title}}</h1>
-   
-    <h4>This project represent the mini rest-api system</h4>
-    <p><b><a href="/users/me" target="_blank">Show Me</a></b></p>
     <hr>
-    <p><b>{{name}}</b></p>
+
+    <h2 style="color: teal;">This project represent the mini rest-api system</h2>
+
+    <p><b>If you were signed up already then click <i style="color: brown;"> Show me</i> button to see your notation at
+            database</b></p>
+
+    <ul>
+        <li>
+            <p><b><a href="/users/me" style="text-decoration-line: none;" target="_blank">Show Me</a></b></p>
+        </li>
+    </ul>
+
+    <p><b>If you get the error message like <i style="color: red;">please authenticate</i> from the program, then
+            you should be authenticated. </b></p>
+
+    <ul>
+        <li>
+            <p><b>the first thing you should do is <i style="color: brown;">sign up</i> for the app via <i
+                        style="color: darkblue;">post</i> request to <i style="color: red;">localhost:8080/users</i></b>
+            </p>
+
+        </li>
+        <li>
+            <p><b>The next step you'll achieve should be <i style="color: brown;">log in</i> the app with your current
+                    account. You can do this by post request to <i
+                        style="color: red;">localhost:8080/users/login</i></b></p>
+        </li>
+
+        <li>
+            <p><b>After the logged in, you can create tasks about anything by a <i style="color: darkgreen;">post</i>
+                    request to <i style="color: red;">localhost:8080/tasks.</i> Also, you can list all of your tasks by
+                    a <i style="color: red;">get</i> request to <i
+                        style="color: steelblue;">localhost:8080/tasks.</i></b></p>
+        </li>
+
+
+    </ul>
+
+    <h4 style="color: brown;">Some Necessary Session Instructions(If you have already logged in)</h4>
+
+    <ul>
+
+
+
+        <li>
+            <p><b>You can log out your last session by a <i
+                        style="color: orangered;">post</i> request to <i style="color: peru;">localhost:8080/logout</i>
+                </b></p>
+        </li>
+
+        <li>
+            <p><b>
+                    If you want to log out all of your session, then you should post request to <i
+                        style="color: peru;">localhost:8080/logoutAll</i>
+                </b></p>
+        </li>
+
+    </ul>
+
+
+    <hr>
+    <p><b style="color:navy;">{{name}}</b></p>
 </body>
+
 </html>

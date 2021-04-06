@@ -25,7 +25,7 @@ app.set("views", publicDirectory)
 
 app.get("/", (req, res) => {
     res.render("index", {
-        title: "Welcome main page",
+        title: "Welcome to main page",
         name: "This page is created by Kıvanç Aydoğmuş"
     })
 })
