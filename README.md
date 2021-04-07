@@ -79,5 +79,7 @@ A simple and robust Node-Express app supported by MongoDB and Docker. It is a ty
       - `GET` request to http://localhost:8080/tasks/?completed=false to list all uncompleted tasks
 
 
+### Some Necessary Session Instructions(If you have already logged in)
 
-
+ - You can log out your last session by a `POST` request to localhost:8080/logout
+ - If you want to log out all of your session, then you should POST` request to localhost:8080/logoutAll
