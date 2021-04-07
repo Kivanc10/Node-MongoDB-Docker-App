@@ -36,5 +36,48 @@ A simple and robust Node-Express app supported by MongoDB and Docker. It is a ty
 ## Runnning the Application With Node.js and MongoDB (without Docker)
 
 1 - <a href="https://docs.mongodb.com/manual/installation/">Install and start with MongoDB</a>
+
 2 - <a href="https://nodejs.org/en/download/">Install the last version of Node.js</a>
-3 - You must change something to prevent getting error. 
+
+3 - Run npm install
+
+4 - You must change something to prevent getting error. 
+
+  - You must change something to prevent getting errors. Open db/mongoose.js file in the repository and type `http://127.0.0.1/` instead of the `mongo`. Thus, you can connect successfully with node.js to the MongoDB database
+  - 
+5 - `npm start` to start the server
+
+6 - At last, navigate to http://localhost:8080/
+
+## Informing about the Using
+
+1 - If you were signed up already then `GET` request to http://localhost:8080/users/me to see your notation at database
+
+2- If you get the error message like `please authenticate` from the program, then you should be authenticated.
+  - The first thing you should do is `sign up` for the app via `POST` request to localhost:8080/users
+      - There is a sample request body for `sign up`:
+          ```JavaScript
+          {
+            "name" : "Kivanc Aydogmus",
+            "email" : "kivanc@example.net",
+            "password" : "samplePswrd@!!"
+          }
+          ```
+  - The next step you'll achieve should be log in the app with your current account. You can do this by `POST` request to localhost:8080/users/login
+  - After the `logged in`, you can create tasks about anything by a `POST` request to localhost:8080/tasks. Also, you can list all of your tasks by a `GET` request to localhost:8080/tasks.
+    - There is a sample request body for create task:
+        ```JavaScript
+             {
+               "description" : "complete the node.js app with docker",
+               "completed" : "true"
+            }
+        ```
+
+    - Also you can query to list task by its `completed` status:
+      - `GET` request to http://localhost:8080/tasks/?completed=true to list all completed tasks
+      
+      - `GET` request to http://localhost:8080/tasks/?completed=false to list all uncompleted tasks
+
+
+
+
