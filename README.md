@@ -30,3 +30,11 @@ A simple and robust Node-Express app supported by MongoDB and Docker. It is a ty
  5 - At last, the application is available on port 8080. Navigate to http://localhost:8080/
  
  6- You can run `docker-compose down` to stop and remove existing the container
+ 
+ 
+
+## Runnning the Application With Node.js and MongoDB (without Docker)
+
+1 - <a href="https://docs.mongodb.com/manual/installation/">Install and start with MongoDB</a>
+2 - <a href="https://nodejs.org/en/download/">Install the last version of Node.js</a>
+3 - You must change something to prevent getting error. 
