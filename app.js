@@ -12,6 +12,29 @@ const app = express()
 
 const port = 8080
 
+const multer = require("multer") // to upload files
+
+const upload = multer({ // to configure our uploads system
+    dest : "images", // destination,
+    limits : { // to define a set of restrict
+        fileSize : 1000000
+    },
+    // to configure some files we dont want to upload
+    fileFilter(req,file,cb) { // request,file,callback
+        if(!file.originalname.endsWith(".pdf")){
+            return cb(new Error("File must be PDF"));
+        }
+        cb(undefined,true) // if everyting is ok
+        // cb(new Error("File must be PDF")); // when try to upload wrong type of file
+        // cb(undefined,true) // (error,is uploaded)
+        // cb(undefined,false) // (error,is uploaded)
+    }
+})
+
+app.post("/upload",upload.single("upload"),(req,res) => {
+    res.send("Upload is achieved")
+})
+
 
 app.use(express.json())
 app.use(userRouter)

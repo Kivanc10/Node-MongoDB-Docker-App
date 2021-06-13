@@ -2,7 +2,11 @@ const express = require("express")
 const User = require("../models/user")
 const router = express.Router()
 const auth = require("../middleware/auth")
+const multer = require("multer")
 
+const upload = multer({
+    dest : "avatars"
+})
 
 
 
@@ -90,6 +94,16 @@ router.patch("/users/me",auth,async (req,res) => {
     }
 })
 
+// to upload avatar images for the user
+
+// this is the key in the single function (as parameter)
+router.post("/users/me/avatar",upload.single("avatar"),(req,res) => {
+    try {
+        res.status(200).send("Succeed")
+    } catch (error) {
+        res.status(404).send("An error occured during the file upload")
+    }
+})
 
 
 module.exports = router;
