@@ -83,3 +83,4 @@ A simple and robust Node-Express app supported by MongoDB and Docker. It is a ty
 
  - You can log out your last session by a `POST` request to http://localhost:8080/logout
  - If you want to log out all of your session, then you should `POST` request to http://localhost:8080/logoutAll
+ - You can select/arrange your avatar image by `POST` at `/users/me/avatar`. Also you can view your avatar image by `GET` at `/users/:id/avatar"`. id represent the user id you registered.
