@@ -83,3 +83,127 @@ A simple and robust Node-Express app supported by MongoDB and Docker. It is a ty
  - You can log out your last session by a `POST` request to http://localhost:8080/logout
  - If you want to log out all of your session, then you should `POST` request to http://localhost:8080/logoutAll
  - You can select/arrange your avatar image by `POST` at `/users/me/avatar`. Also you can view your avatar image by `GET` at `/users/:id/avatar"`. id represent the user id you registered.
+
+
+Sample python code to use that api correctly. This pieces of code allows you to figure out how the api works and what I should do to using.
+
+
+```Python
+import requests
+
+url = "http://104.248.128.69:8080"
+
+
+url_register = url + "/users"
+url_sign_in = url + "/users/login"
+url_show_me = url + "/users/me"
+url_add_task = url + "/tasks"
+url_show_tasks = url + "/tasks"
+url_log_out = url + "/users/logout"
+
+data = {
+    "name": "Micheal Foster",
+    "email": "micheal_foster15@gmail.com",
+    "password": "samplePassword_1==*?@!!"
+}
+
+def register(url,data):
+    response_json = {}
+    r = requests.post(url = url,json=data)
+    if (r.status_code == 201):
+        print("The sign-up operation has been completed succesfully")
+        response_json = r.json()
+    else:
+        print("Status code --> ",r.status_code)
+        print("There is something wrong over there -> ",r.text)
+    return response_json
+
+
+def signIn(url,data):
+    response_json = {}
+    r = requests.post(url = url,json=data)
+    if r.status_code == 200:
+        print("The sing-in operation has been completed succesfully")
+        response_json = r.json()
+    else:
+        print("Status code --> ",r.status_code)
+        print("There is something wrong over there -> ",r.text)
+    return response_json
+
+# to sign up
+sign_up_resp = register(url_register,data)
+# to sign in
+sign_in_resp = signIn(url_sign_in,data)
+# store the tokens to keep logged in
+myTokens = []
+
+myTokens.append(sign_up_resp["token"])
+myTokens.append(sign_in_resp["token"])
+
+print(myTokens)
+
+# headers object needs to token
+headers = {
+    "Authorization" : myTokens[0]
+}
+
+# show me
+def showMe(url,headers):
+    """
+    this func allows us to get the user infos
+    """
+    r = requests.get(url,headers=headers)
+    if r.status_code == 401:
+        print(r.text)
+    else:
+        print("Authentication was completed succesfully")
+        print(r.json())
+
+# log out
+def logOut(url,headers):
+    """
+    this func allows us to log out the all of sections belong to the user
+    """
+    r = requests.delete(url,headers=headers)
+    if r.status_code == 500:
+        print("Log out operation did not succesful")        
+    else:
+       print("The user is deleted succesfully")
+
+
+def addTaskToUser(url,data,headers):
+    """
+    this func allows us to add task to the user
+    """
+    r = requests.post(url = url,json=data,headers=headers)
+    if r.status_code == 201:
+        print("The task is appended succesfully to the user")
+        print(r.json())
+    else:
+        print("An error occured when the task is appended")
+        print(r.json())
+
+def showTasks(url,headers):
+    """
+    this func allows us to sow all tasks belong to the user
+    """
+    r = requests.get(url,headers=headers)
+    if r.status_code != 500 | 404 | 400:
+        print("Tasks --> \n")
+        print(r.json())
+    else:
+        print("An error occured")
+        print(r.text)
+
+task = {
+    "description" : "I'm using the my rest api",
+    "completed" : "true"
+}
+
+showMe(url_show_me,headers)
+addTaskToUser(url_add_task,task,headers)
+showTasks(url_show_tasks,headers)
+logOut(url_log_out,headers)
+```
+
+
