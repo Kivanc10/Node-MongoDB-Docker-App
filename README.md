@@ -85,7 +85,7 @@ A simple and robust Node-Express app supported by MongoDB and Docker. It is a ty
  - You can select/arrange your avatar image by `POST` at `/users/me/avatar`. Also you can view your avatar image by `GET` at `/users/:id/avatar"`. id represent the user id you registered.
 
 
-Sample python code to use that api correctly. This pieces of code allows you to figure out how the api works and what I should do to using.
+`Sample python code to use that api correctly. This pieces of code allows you to figure out how the api works and what I should do to using.`
 
 
 ```Python
