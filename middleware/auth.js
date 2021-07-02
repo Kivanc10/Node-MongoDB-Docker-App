@@ -13,6 +13,7 @@ const auth = async (req, res, next) => {
 
         req.user = user
         req.token = token // I taken to use for delete process
+        req.user_id = decoded._id // to delete the current user by its id
         next()
 
     } catch (error) {

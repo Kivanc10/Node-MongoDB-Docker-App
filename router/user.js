@@ -77,6 +77,17 @@ router.post("/users/logoutAll", auth, async (req, res) => { // logout from all s
     }
 })
 
+// delete the current user(me)
+router.delete("/users/me",auth,async (req,res) => {
+    try {
+        await User.findByIdAndDelete({_id : req.user_id}) // delete user id
+        await req.user.save()
+        res.status(200).send()
+    } catch (error) {
+        res.status(404).send(error)
+    }
+})
+
 
 
 router.patch("/users/me", auth, async (req, res) => {
