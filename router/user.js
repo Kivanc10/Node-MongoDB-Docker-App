@@ -82,9 +82,9 @@ router.delete("/users/me",auth,async (req,res) => {
     try {
         await User.findByIdAndDelete({_id : req.user_id}) // delete user id
         await req.user.save()
-        res.status(200).send()
+        res.status(200).send("Users was deleted succesfully")
     } catch (error) {
-        res.status(404).send(error)
+        res.status(500).send(error)
     }
 })
 
