@@ -76,7 +76,7 @@ router.get("/tasks/list",async(req,res) => {
     
 
     try {
-        const tasks = await Task.find({}).sort("createdAt").exec()
+        const tasks = await Task.find({}).sort({date : "desc"}).exec()
         if(!tasks) {
             throw new Error("An error occured during the find tasks")
         }
