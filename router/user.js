@@ -80,8 +80,8 @@ router.post("/users/logoutAll", auth, async (req, res) => { // logout from all s
 // delete the current user(me)
 router.delete("/users/me",auth,async (req,res) => {
     try {
-        await User.findByIdAndDelete({_id : req.user_id}) // delete user id
-        await req.user.save()
+       await User.findByIdAndDelete({_id : req.user_id})
+    
         res.status(200).send("Users was deleted succesfully")
     } catch (error) {
         res.status(500).send(error)
