@@ -110,17 +110,16 @@ router.delete("/tasks/:id", auth, async (req, res) => {
     }
 })
 
-router.delete("/tasks/me", auth, async (req, res) => {
+router.delete("/tasks/me",auth,async (req,res) => {
     try {
-        const tasks = await Task.remove({owner : req.user._id})
-        // if(!tasks) {
-        //     return res.status(404).send("There is no task to remove")
-        // }
-        res.status(200).send("Tasks belong the user were deleted succesfully")
+        await Task.deleteMany({owner : req.user._id})
+        res.status(200).send("Tasks were deleted succesfully")
     } catch (error) {
-        res.status(204).send(error)
+        res.status(500).send("An error occured during the remove tasks")
+        
     }
 })
+
 
 // router.delete("/tasks/me", auth, async (req, res) => {
 //     try {
