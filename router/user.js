@@ -82,7 +82,7 @@ router.delete("/users/me",auth,async (req,res) => {
     try {
        await User.findByIdAndRemove({_id : req.user_id})
         
-        res.status(200).send("Users was deleted succesfully")
+        res.status(200).send("User was deleted succesfully")
     } catch (error) {
         res.status(204).send(error)
     }
@@ -164,5 +164,6 @@ router.get("/users/:id/avatar",async (req,res) => {
         res.status(404).send(error)
     }
 })
+
 
 module.exports = router;

@@ -2,6 +2,7 @@ const express = require("express")
 const Task = require("../models/task")
 const auth = require("../middleware/auth")
 const { parse } = require("path")
+const User = require("../models/user")
 const router = express.Router()
 
 
@@ -56,6 +57,34 @@ router.get("/tasks",auth,async (req,res) => {
 })
 
 
+router.get("/tasks/list",async(req,res) => {
+    const match = {}
+
+    const sort = {}
+
+    if(req.query.sortBy){
+        const parts = req.query.sortBy.split(":") // createdAt,desc(asc)
+        sort[parts[0]] = parts[1] === "desc" ? -1 : 1
+    }
+
+
+    if (req.query.completed){ // if completed is true
+        match.completed = req.query.completed === "true"
+    }
+
+    try {
+        const users = await User.find({})
+        await users.populate({
+            limit : parseInt(req.query.limit),
+            skip : parseInt(req.query.skip),
+            sort
+        }).execPopulate()
+
+        res.send(users)
+    } catch (error) {
+        res.status(500).send()
+    }
+})
 
 router.patch("/tasks/:id",auth,async (req,res) => {
     const updates = Object.keys(req.body)
