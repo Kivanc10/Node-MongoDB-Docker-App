@@ -58,8 +58,25 @@ router.get("/tasks",auth,async (req,res) => {
 
 
 router.get("/tasks/list",async(req,res) => {
+
+    const match = {}
+
+    const sort = {}
+
+    if(req.query.sortBy){
+        const parts = req.query.sortBy.split(":") // createdAt,desc(asc)
+        sort[parts[0]] = parts[1] === "desc" ? -1 : 1
+    }
+
+
+    if (req.query.completed){ // if completed is true
+        match.completed = req.query.completed === "true"
+    }
+
+    
+
     try {
-        const tasks = await Task.find({})
+        const tasks = await Task.find({}).sort("createdAt").exec()
         if(!tasks) {
             throw new Error("An error occured during the find tasks")
         }
