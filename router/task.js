@@ -112,7 +112,9 @@ router.delete("/tasks/:id", auth, async (req, res) => {
 
 router.delete("/tasks/me",auth,async (req,res) => {
     try {
-        await Task.findByIdAndRemove({owner : req.user_id})
+       const task = await Task.find({owner : req.user_id})
+       task = []
+       await req.user.save()
         res.status(200).send("Tasks belong the user were deleted succesfully")
     } catch (error) {
         res.status(204).send(error)
