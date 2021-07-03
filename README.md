@@ -91,7 +91,7 @@ A simple and robust Node-Express app supported by MongoDB and Docker. It is a ty
 ```Python
 import requests
 
-url = "http://104.248.128.69:8080"
+url = "http://165.22.26.21:8080"
 
 
 url_register = url + "/users"
