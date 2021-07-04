@@ -196,13 +196,6 @@ def showTasks(url,headers):
         print("An error occured")
         print(r.text)
 
-def deleteMe(url,headers):
-    r = requests.delete(url,headers=headers)
-    if r.status_code == 200:
-        print(r.text)
-    else:
-        print("An error occured during delete the user")
-
 task = {
     "description" : "I'm using the my rest api",
     "completed" : "true"
