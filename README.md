@@ -171,6 +171,13 @@ def logOut(url,headers):
     else:
        print("The user is deleted succesfully")
 
+def deleteMe(url,headers):
+    r = requests.delete(url,headers=headers)
+    if r.status_code == 200:
+        print(r.text)
+    else:
+        print("An error occured during delete the user")
+        
 
 def addTaskToUser(url,data,headers):
     """
