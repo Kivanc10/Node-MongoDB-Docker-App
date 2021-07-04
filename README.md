@@ -100,6 +100,7 @@ url_show_me = url + "/users/me"
 url_add_task = url + "/tasks"
 url_show_tasks = url + "/tasks"
 url_log_out = url + "/users/logout"
+url_delete_me = url + "/users/me"
 
 data = {
     "name": "Micheal Foster",
@@ -194,6 +195,13 @@ def showTasks(url,headers):
     else:
         print("An error occured")
         print(r.text)
+
+def deleteMe(url,headers):
+    r = requests.delete(url,headers=headers)
+    if r.status_code == 200:
+        print(r.text)
+    else:
+        print("An error occured during delete the user")
 
 task = {
     "description" : "I'm using the my rest api",
